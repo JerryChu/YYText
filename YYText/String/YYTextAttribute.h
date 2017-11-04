@@ -142,14 +142,14 @@ UIKIT_EXTERN NSString *const YYTextHighlightAttributeName;
 /// Use this attribute to add transform to each glyph in a range of text.
 UIKIT_EXTERN NSString *const YYTextGlyphTransformAttributeName;
 
-
+/// The value of this attribute is a `UIImage` object stores the image for drawing bullet.
+/// Use this attribute to add bullet to each new line.
+UIKIT_EXTERN NSString *const YYTextBulletAttributeName;
 
 #pragma mark - String Token Define
 
 UIKIT_EXTERN NSString *const YYTextAttachmentToken; ///< Object replacement character (U+FFFC), used for text attachment.
 UIKIT_EXTERN NSString *const YYTextTruncationToken; ///< Horizontal ellipsis (U+2026), used for text truncation  "…".
-
-
 
 #pragma mark - Attribute Value Define
 

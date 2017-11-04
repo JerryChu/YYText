@@ -1,12 +1,12 @@
 //
-//  YYTextEditExample.m
-//  YYKitExample
+//  YYTextListEditExample.h.m
+//  YYTextDemo
 //
-//  Created by ibireme on 15/9/3.
-//  Copyright (c) 2015 ibireme. All rights reserved.
+//  Created by 褚佳义 on 2017/11/4.
+//  Copyright © 2017年 ibireme. All rights reserved.
 //
 
-#import "YYTextEditExample.h"
+#import "YYTextListEditExample.h"
 #import "YYText.h"
 #import "YYImage.h"
 #import "UIImage+YYWebImage.h"
@@ -19,15 +19,14 @@
 #import "UIGestureRecognizer+YYAdd.h"
 #import "YYTextExampleHelper.h"
 
-@interface YYTextEditExample () <YYTextViewDelegate, YYTextKeyboardObserver>
+@interface YYTextListEditExample ()<YYTextViewDelegate, YYTextKeyboardObserver>
 @property (nonatomic, assign) YYTextView *textView;
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UISwitch *verticalSwitch;
 @property (nonatomic, strong) UISwitch *debugSwitch;
-@property (nonatomic, strong) UISwitch *exclusionSwitch;
 @end
 
-@implementation YYTextEditExample
+@implementation YYTextListEditExample
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -35,7 +34,6 @@
     if ([self respondsToSelector:@selector(setAutomaticallyAdjustsScrollViewInsets:)]) {
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
-    [self initImageView];
     __weak typeof(self) _self = self;
     
     UIView *toolbar;
@@ -47,12 +45,28 @@
     toolbar.size = CGSizeMake(kScreenWidth, 40);
     toolbar.top = kiOS7Later ? 64 : 0;
     [self.view addSubview:toolbar];
-    
-    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] initWithString:@"It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness, it was the season of light, it was the season of darkness, it was the spring of hope, it was the winter of despair, we had everything before us, we had nothing before us. We were all going direct to heaven, we were all going direct the other way.\n\n这是最好的时代，这是最坏的时代；这是智慧的时代，这是愚蠢的时代；这是信仰的时期，这是怀疑的时期；这是光明的季节，这是黑暗的季节；这是希望之春，这是失望之冬；人们面前有着各样事物，人们面前一无所有；人们正在直登天堂，人们正在直下地狱。"];
+
+    UIImage *image = [UIImage imageNamed:@"bullet@2x.png"];
+    NSMutableAttributedString *segment0 = [[NSMutableAttributedString alloc] initWithString:@"It was the best of times, it was the worst of times.\nIt was the age of wisdom, it was the age of foolishness.\nIt was the season of light, it was the season of darkness."];
+    segment0.yy_headIndent = 20;
+    [segment0 yy_setAttribute:YYTextBulletAttributeName
+                    value:image
+                    range:segment0.yy_rangeOfAll];
+    NSMutableAttributedString *segment1 = [[NSMutableAttributedString alloc] initWithString:@"\n\n这里是普通文本普通文本普通文本普通文本普通文本普通文本普通文本普通文本普通文本普通文本。\n\n"];
+    NSMutableAttributedString *segment2 = [[NSMutableAttributedString alloc] initWithString:@"这是最好的时代，这是最坏的时代。\n这是智慧的时代，这是愚蠢的时代。\n这是信仰的时期，这是怀疑的时期。"];
+    [segment2 yy_setAttribute:YYTextBulletAttributeName
+                        value:image
+                        range:segment2.yy_rangeOfAll];
+    segment2.yy_headIndent = 20;
+
+    NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
+    [text appendAttributedString:segment0];
+    [text appendAttributedString:segment1];
+    [text appendAttributedString:segment2];
     text.yy_font = [UIFont fontWithName:@"Times New Roman" size:20];
     text.yy_lineSpacing = 4;
     text.yy_firstLineHeadIndent = 20;
-    
+
     YYTextView *textView = [YYTextView new];
     textView.attributedText = text;
     textView.size = self.view.size;
@@ -92,11 +106,6 @@
     _verticalSwitch.layer.transformScale = 0.8;
     [_verticalSwitch addBlockForControlEvents:UIControlEventValueChanged block:^(UISwitch *switcher) {
         [_self.textView endEditing:YES];
-        if (switcher.isOn) {
-            [_self setExclusionPathEnabled:NO];
-            _self.exclusionSwitch.on = NO;
-        }
-        _self.exclusionSwitch.enabled = !switcher.isOn;
         _self.textView.verticalForm = switcher.isOn; /// Set vertical form
     }];
     [toolbar addSubview:_verticalSwitch];
@@ -120,66 +129,11 @@
     }];
     [toolbar addSubview:_debugSwitch];
     
-    label = [UILabel new];
-    label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont systemFontOfSize:14];
-    label.text = @"Exclusion:";
-    label.size = CGSizeMake([label.text widthForFont:label.font] + 2, toolbar.height);
-    label.left = _debugSwitch.right + 5;
-    [toolbar addSubview:label];
-    
-    _exclusionSwitch = [UISwitch new];
-    [_exclusionSwitch sizeToFit];
-    _exclusionSwitch.centerY = toolbar.height / 2;
-    _exclusionSwitch.left = label.right - 5;
-    _exclusionSwitch.layer.transformScale = 0.8;
-    [_exclusionSwitch addBlockForControlEvents:UIControlEventValueChanged block:^(UISwitch *switcher) {
-        [_self setExclusionPathEnabled:switcher.isOn];
-    }];
-    [toolbar addSubview:_exclusionSwitch];
-    
-    
     [[YYTextKeyboardManager defaultManager] addObserver:self];
 }
 
 - (void)dealloc {
     [[YYTextKeyboardManager defaultManager] removeObserver:self];
-}
-
-- (void)setExclusionPathEnabled:(BOOL)enabled {
-    if (enabled) {
-        [self.textView addSubview:self.imageView];
-        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.imageView.frame
-                                                        cornerRadius:self.imageView.layer.cornerRadius];
-        self.textView.exclusionPaths = @[path]; /// Set exclusion paths
-    } else {
-        [self.imageView removeFromSuperview];
-        self.textView.exclusionPaths = nil;
-    }
-}
-
-- (void)initImageView {
-    NSData *data = [NSData dataNamed:@"dribbble256_imageio.png"];
-    UIImage *image = [[YYImage alloc] initWithData:data scale:2];
-    UIImageView *imageView = [[YYAnimatedImageView alloc] initWithImage:image];
-    imageView.clipsToBounds = YES;
-    imageView.userInteractionEnabled = YES;
-    imageView.layer.cornerRadius = imageView.height / 2;
-    imageView.center = CGPointMake(kScreenWidth / 2, kScreenWidth / 2);
-    self.imageView = imageView;
-
-    
-    __weak typeof(self) _self = self;
-    UIPanGestureRecognizer *g = [[UIPanGestureRecognizer alloc] initWithActionBlock:^(UIPanGestureRecognizer *g) {
-        __strong typeof(_self) self = _self;
-        if (!self) return;
-        CGPoint p = [g locationInView:self.textView];
-        self.imageView.center = p;
-        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.imageView.frame
-                                                        cornerRadius:self.imageView.layer.cornerRadius];
-        self.textView.exclusionPaths = @[path];
-    }];
-    [imageView addGestureRecognizer:g];
 }
 
 - (void)edit:(UIBarButtonItem *)item {

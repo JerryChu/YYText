@@ -38,10 +38,10 @@ NSString *const YYTextBlockBorderAttributeName = @"YYTextBlockBorder";
 NSString *const YYTextAttachmentAttributeName = @"YYTextAttachment";
 NSString *const YYTextHighlightAttributeName = @"YYTextHighlight";
 NSString *const YYTextGlyphTransformAttributeName = @"YYTextGlyphTransform";
+NSString *const YYTextBulletAttributeName = @"YYTextBullet";
 
 NSString *const YYTextAttachmentToken = @"\uFFFC";
 NSString *const YYTextTruncationToken = @"\u2026";
-
 
 YYTextAttributeType YYTextAttributeGetType(NSString *name){
     if (name.length == 0) return YYTextAttributeTypeNone;
@@ -111,6 +111,7 @@ YYTextAttributeType YYTextAttributeGetType(NSString *name){
         dic[YYTextAttachmentAttributeName] = YYText;
         dic[YYTextHighlightAttributeName] = YYText;
         dic[YYTextGlyphTransformAttributeName] = YYText;
+        dic[YYTextBulletAttributeName] = YYText;
     });
     NSNumber *num = dic[name];
     if (num != nil) return num.integerValue;

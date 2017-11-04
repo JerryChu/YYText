@@ -26,6 +26,7 @@
     [self addCell:@"Text Attributes 2" class:@"YYTextTagExample"];
     [self addCell:@"Text Attachments" class:@"YYTextAttachmentExample"];
     [self addCell:@"Text Edit" class:@"YYTextEditExample"];
+    [self addCell:@"List Edit" class:@"YYTextListEditExample"];
     [self addCell:@"Text Parser (Markdown)" class:@"YYTextMarkdownExample"];
     [self addCell:@"Text Parser (Emoticon)" class:@"YYTextEmoticonExample"];
     [self addCell:@"Text Binding" class:@"YYTextBindingExample"];

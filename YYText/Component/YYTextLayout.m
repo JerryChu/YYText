@@ -337,6 +337,7 @@ dispatch_semaphore_signal(_lock);
 @property (nonatomic, readwrite) BOOL needDrawInnerShadow;
 @property (nonatomic, readwrite) BOOL needDrawStrikethrough;
 @property (nonatomic, readwrite) BOOL needDrawBorder;
+@property (nonatomic, readwrite) BOOL needDrawBullet;
 
 @property (nonatomic, assign) NSUInteger *lineRowsIndex;
 @property (nonatomic, assign) YYRowEdge *lineRowsEdge; ///< top-left origin
@@ -830,6 +831,7 @@ dispatch_semaphore_signal(_lock);
             if (attrs[YYTextInnerShadowAttributeName]) layout.needDrawInnerShadow = YES;
             if (attrs[YYTextStrikethroughAttributeName]) layout.needDrawStrikethrough = YES;
             if (attrs[YYTextBorderAttributeName]) layout.needDrawBorder = YES;
+            if (attrs[YYTextBulletAttributeName]) layout.needDrawBullet = YES;
         };
         
         [layout.text enumerateAttributesInRange:visibleRange options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:block];
@@ -3136,6 +3138,44 @@ static void YYTextDrawInnerShadow(YYTextLayout *layout, CGContextRef context, CG
     CGContextRestoreGState(context);
 }
 
+static void YYTextDrawBullet(YYTextLayout *layout, CGContextRef context, CGSize size, CGPoint point, BOOL (^cancel)(void)) {
+    BOOL isVertical = layout.container.verticalForm;
+
+    NSArray *lines = layout.lines;
+    for (NSUInteger l = 0, lMax = lines.count; l < lMax; l++) {
+        YYTextLine *line = lines[l];
+        if (layout.truncatedLine && layout.truncatedLine.index == line.index) line = layout.truncatedLine;
+        NSDictionary *attributes = [layout.text yy_attributesAtIndex:line.range.location];
+        UIImage *image = (UIImage *)attributes[YYTextBulletAttributeName];
+        if (image) {
+            BOOL newLine = YES;
+            // only draw bullet for new line
+            if (line.range.location > 0) {
+                NSRange firstCharacterRange = NSMakeRange(line.range.location - 1, 1);
+                newLine = [[layout.text.string substringWithRange:firstCharacterRange] isEqualToString:@"\n"];
+            }
+            if (newLine) {
+                CGFloat posX, posY;
+                if (isVertical) {
+                    posX = size.width - (layout.container.size.width - line.bounds.origin.x) + (line.bounds.size.width - image.size.height) / 2.f;
+                    posY = line.bounds.origin.y;
+                } else {
+                    posX = line.bounds.origin.x - layout.container.insets.left;
+                    posY = line.bounds.origin.y + (line.bounds.size.height - image.size.height) / 2.f;
+                }
+                CGRect rect = CGRectMake(posX, posY, image.size.width, image.size.height);
+                rect = CGRectStandardize(rect);
+                
+                CGContextSaveGState(context);
+                CGContextTranslateCTM(context, 0, CGRectGetMaxY(rect) + CGRectGetMinY(rect));
+                CGContextScaleCTM(context, 1, -1);
+                CGContextDrawImage(context, rect, image.CGImage);
+                CGContextRestoreGState(context);
+            }
+        }
+    }
+}
+
 static void YYTextDrawDebug(YYTextLayout *layout, CGContextRef context, CGSize size, CGPoint point, YYTextDebugOption *op) {
     UIGraphicsPushContext(context);
     CGContextSaveGState(context);
@@ -3372,6 +3412,10 @@ static void YYTextDrawDebug(YYTextLayout *layout, CGContextRef context, CGSize s
         if (self.needDrawBorder && context) {
             if (cancel && cancel()) return;
             YYTextDrawBorder(self, context, size, point, YYTextBorderTypeNormal, cancel);
+        }
+        if (self.needDrawBullet && context) {
+            if (cancel && cancel()) return;
+            YYTextDrawBullet(self, context, size, point, cancel);
         }
         if (debug.needDrawDebug && context) {
             if (cancel && cancel()) return;

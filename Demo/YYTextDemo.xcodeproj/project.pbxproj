@@ -59,7 +59,6 @@
 		D91055211F37367B0007F224 /* YYTextEmoticonExample.m in Sources */ = {isa = PBXBuildFile; fileRef = D910550E1F37367B0007F224 /* YYTextEmoticonExample.m */; };
 		D91055221F37367B0007F224 /* YYTextExample.m in Sources */ = {isa = PBXBuildFile; fileRef = D91055101F37367B0007F224 /* YYTextExample.m */; };
 		D91055231F37367B0007F224 /* YYTextExampleHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D91055121F37367B0007F224 /* YYTextExampleHelper.m */; };
-		D91055241F37367B0007F224 /* YYTextMarkdownExample.m in Sources */ = {isa = PBXBuildFile; fileRef = D91055141F37367B0007F224 /* YYTextMarkdownExample.m */; };
 		D91055251F37367B0007F224 /* YYTextRubyExample.m in Sources */ = {isa = PBXBuildFile; fileRef = D91055161F37367B0007F224 /* YYTextRubyExample.m */; };
 		D91055261F37367B0007F224 /* YYTextTagExample.m in Sources */ = {isa = PBXBuildFile; fileRef = D91055181F37367B0007F224 /* YYTextTagExample.m */; };
 		D91055271F37367B0007F224 /* YYTextUndoRedoExample.m in Sources */ = {isa = PBXBuildFile; fileRef = D910551A1F37367B0007F224 /* YYTextUndoRedoExample.m */; };
@@ -79,6 +78,9 @@
 		D94EE9981F37304200F37AD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D94EE9971F37304200F37AD6 /* Assets.xcassets */; };
 		D94EE99B1F37304200F37AD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D94EE9991F37304200F37AD6 /* LaunchScreen.storyboard */; };
 		D94EE99E1F37304200F37AD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D94EE99D1F37304200F37AD6 /* main.m */; };
+		F0D183BB1FADD590003EB58A /* YYTextListEditExample.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D183BA1FADD590003EB58A /* YYTextListEditExample.m */; };
+		F0D183BE1FADD5A8003EB58A /* YYTextMarkdownExample.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D183BC1FADD5A7003EB58A /* YYTextMarkdownExample.m */; };
+		F0D183C01FADD621003EB58A /* bullet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0D183BF1FADD621003EB58A /* bullet@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -186,8 +188,6 @@
 		D91055101F37367B0007F224 /* YYTextExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextExample.m; sourceTree = "<group>"; };
 		D91055111F37367B0007F224 /* YYTextExampleHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextExampleHelper.h; sourceTree = "<group>"; };
 		D91055121F37367B0007F224 /* YYTextExampleHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextExampleHelper.m; sourceTree = "<group>"; };
-		D91055131F37367B0007F224 /* YYTextMarkdownExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextMarkdownExample.h; sourceTree = "<group>"; };
-		D91055141F37367B0007F224 /* YYTextMarkdownExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextMarkdownExample.m; sourceTree = "<group>"; };
 		D91055151F37367B0007F224 /* YYTextRubyExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextRubyExample.h; sourceTree = "<group>"; };
 		D91055161F37367B0007F224 /* YYTextRubyExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextRubyExample.m; sourceTree = "<group>"; };
 		D91055171F37367B0007F224 /* YYTextTagExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextTagExample.h; sourceTree = "<group>"; };
@@ -212,6 +212,11 @@
 		D94EE99A1F37304200F37AD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D94EE99C1F37304200F37AD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D94EE99D1F37304200F37AD6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F0D183B91FADD590003EB58A /* YYTextListEditExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextListEditExample.h; sourceTree = "<group>"; };
+		F0D183BA1FADD590003EB58A /* YYTextListEditExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextListEditExample.m; sourceTree = "<group>"; };
+		F0D183BC1FADD5A7003EB58A /* YYTextMarkdownExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextMarkdownExample.m; sourceTree = "<group>"; };
+		F0D183BD1FADD5A7003EB58A /* YYTextMarkdownExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextMarkdownExample.h; sourceTree = "<group>"; };
+		F0D183BF1FADD621003EB58A /* bullet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bullet@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -378,6 +383,7 @@
 				D91055281F37368D0007F224 /* dribbble64_imageio.png */,
 				D91055291F37368D0007F224 /* dribbble256_imageio.png */,
 				D910552B1F37368D0007F224 /* pia@2x.png */,
+				F0D183BF1FADD621003EB58A /* bullet@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -431,8 +437,10 @@
 				D91055041F37367B0007F224 /* YYTextAttachmentExample.m */,
 				D910550B1F37367B0007F224 /* YYTextEditExample.h */,
 				D910550C1F37367B0007F224 /* YYTextEditExample.m */,
-				D91055131F37367B0007F224 /* YYTextMarkdownExample.h */,
-				D91055141F37367B0007F224 /* YYTextMarkdownExample.m */,
+				F0D183B91FADD590003EB58A /* YYTextListEditExample.h */,
+				F0D183BA1FADD590003EB58A /* YYTextListEditExample.m */,
+				F0D183BD1FADD5A7003EB58A /* YYTextMarkdownExample.h */,
+				F0D183BC1FADD5A7003EB58A /* YYTextMarkdownExample.m */,
 				D910550D1F37367B0007F224 /* YYTextEmoticonExample.h */,
 				D910550E1F37367B0007F224 /* YYTextEmoticonExample.m */,
 				D91055071F37367B0007F224 /* YYTextBindingExample.h */,
@@ -508,6 +516,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0D183C01FADD621003EB58A /* bullet@2x.png in Resources */,
 				D94EE99B1F37304200F37AD6 /* LaunchScreen.storyboard in Resources */,
 				D910552F1F37368D0007F224 /* pia@2x.png in Resources */,
 				D910552D1F37368D0007F224 /* dribbble256_imageio.png in Resources */,
@@ -559,13 +568,14 @@
 				D910551C1F37367B0007F224 /* YYTextAttachmentExample.m in Sources */,
 				D91054C71F3735E50007F224 /* YYTextLine.m in Sources */,
 				D91054CD1F3735E50007F224 /* YYTextRubyAnnotation.m in Sources */,
-				D91055241F37367B0007F224 /* YYTextMarkdownExample.m in Sources */,
 				D91054D41F3735E50007F224 /* YYTextTransaction.m in Sources */,
 				D910548B1F3735D20007F224 /* YYSpriteSheetImage.m in Sources */,
 				D91054CA1F3735E50007F224 /* YYTextArchiver.m in Sources */,
+				F0D183BE1FADD5A8003EB58A /* YYTextMarkdownExample.m in Sources */,
 				D910551E1F37367B0007F224 /* YYTextBindingExample.m in Sources */,
 				D91054D61F3735E50007F224 /* YYTextWeakProxy.m in Sources */,
 				D91054C41F3735E50007F224 /* YYTextInput.m in Sources */,
+				F0D183BB1FADD590003EB58A /* YYTextListEditExample.m in Sources */,
 				D91054871F3735D20007F224 /* YYAnimatedImageView.m in Sources */,
 				D91054D21F3735E50007F224 /* UIView+YYText.m in Sources */,
 				D91054C61F3735E50007F224 /* YYTextLayout.m in Sources */,
