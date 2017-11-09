@@ -39,7 +39,7 @@ NSString *const YYTextAttachmentAttributeName = @"YYTextAttachment";
 NSString *const YYTextHighlightAttributeName = @"YYTextHighlight";
 NSString *const YYTextGlyphTransformAttributeName = @"YYTextGlyphTransform";
 NSString *const YYTextBulletAttributeName = @"YYTextBullet";
-NSString *const YYTextAttachmentLineBreakAttributeName @"YYTextAttachmentLineBreak";
+NSString *const YYTextAttachmentLineBreakAttributeName = @"YYTextAttachmentLineBreak";
 
 NSString *const YYTextAttachmentToken = @"\uFFFC";
 NSString *const YYTextTruncationToken = @"\u2026";
