@@ -1422,7 +1422,8 @@ return style. _attr_;
                  (id)kCTRunDelegateAttributeName,
                  YYTextBackedStringAttributeName,
                  YYTextBindingAttributeName,
-                 YYTextAttachmentAttributeName].mutableCopy;
+                 YYTextAttachmentAttributeName,
+                 YYTextAttachmentLineBreakAttributeName].mutableCopy;
         if (kiOS8Later) {
             [keys addObject:(id)kCTRubyAnnotationAttributeName];
         }
