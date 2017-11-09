@@ -578,11 +578,43 @@ return style. _attr_;
                                                attachmentSize:(CGSize)attachmentSize
                                                   alignToFont:(UIFont *)font
                                                     alignment:(YYTextVerticalAlignment)alignment {
+    return [self yy_attachmentStringWithContent:content
+                                    contentMode:contentMode
+                                 attachmentSize:attachmentSize
+                                    alignToFont:font
+                                      alignment:alignment
+                                       userInfo:@{}];
+}
+
++ (NSMutableAttributedString *)yy_attachmentStringWithContent:(id)content
+                                                  contentMode:(UIViewContentMode)contentMode
+                                               attachmentSize:(CGSize)attachmentSize
+                                                  alignToFont:(UIFont *)font
+                                                    alignment:(YYTextVerticalAlignment)alignment
+                                                     userInfo:(NSDictionary *)userInfo {
+    return [self yy_attachmentStringWithContent:content
+                                    contentMode:contentMode
+                                  contentInsets:UIEdgeInsetsZero
+                                 attachmentSize:attachmentSize
+                                    alignToFont:font
+                                      alignment:alignment
+                                       userInfo:userInfo];
+}
+
++ (NSMutableAttributedString *)yy_attachmentStringWithContent:(id)content
+                                                  contentMode:(UIViewContentMode)contentMode
+                                                contentInsets:(UIEdgeInsets)contentInsets
+                                               attachmentSize:(CGSize)attachmentSize
+                                                  alignToFont:(UIFont *)font
+                                                    alignment:(YYTextVerticalAlignment)alignment
+                                                     userInfo:(NSDictionary *)userInfo {
     NSMutableAttributedString *atr = [[NSMutableAttributedString alloc] initWithString:YYTextAttachmentToken];
     
     YYTextAttachment *attach = [YYTextAttachment new];
     attach.content = content;
     attach.contentMode = contentMode;
+    attach.userInfo = userInfo;
+    attach.contentInsets = contentInsets;
     [atr yy_setTextAttachment:attach range:NSMakeRange(0, atr.length)];
     
     YYTextRunDelegate *delegate = [YYTextRunDelegate new];
