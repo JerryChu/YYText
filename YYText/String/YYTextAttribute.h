@@ -146,6 +146,10 @@ UIKIT_EXTERN NSString *const YYTextGlyphTransformAttributeName;
 /// Use this attribute to add bullet to each new line.
 UIKIT_EXTERN NSString *const YYTextBulletAttributeName;
 
+/// The value of this attribute is a `NSNumber`(wrapped `Bool`) object.
+/// Use this attribute to identify whether there's line break caused by attachment.
+UIKIT_EXTERN NSString *const YYTextAttachmentLineBreakAttributeName;
+
 #pragma mark - String Token Define
 
 UIKIT_EXTERN NSString *const YYTextAttachmentToken; ///< Object replacement character (U+FFFC), used for text attachment.
