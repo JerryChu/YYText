@@ -38,8 +38,9 @@ NSString *const YYTextBlockBorderAttributeName = @"YYTextBlockBorder";
 NSString *const YYTextAttachmentAttributeName = @"YYTextAttachment";
 NSString *const YYTextHighlightAttributeName = @"YYTextHighlight";
 NSString *const YYTextGlyphTransformAttributeName = @"YYTextGlyphTransform";
-NSString *const YYTextBulletAttributeName = @"YYTextBullet";
 NSString *const YYTextAttachmentLineBreakAttributeName = @"YYTextAttachmentLineBreak";
+NSString *const YYTextListTypeAttributeName = @"YYTextListTypeAttributeName";
+NSString *const YYTextListBulletAttributeName = @"YYTextListBulletAttributeName";
 
 NSString *const YYTextAttachmentToken = @"\uFFFC";
 NSString *const YYTextTruncationToken = @"\u2026";
@@ -112,7 +113,8 @@ YYTextAttributeType YYTextAttributeGetType(NSString *name){
         dic[YYTextAttachmentAttributeName] = YYText;
         dic[YYTextHighlightAttributeName] = YYText;
         dic[YYTextGlyphTransformAttributeName] = YYText;
-        dic[YYTextBulletAttributeName] = YYText;
+        dic[YYTextListTypeAttributeName] = YYText;
+        dic[YYTextListBulletAttributeName] = YYText;
     });
     NSNumber *num = dic[name];
     if (num != nil) return num.integerValue;
@@ -524,3 +526,42 @@ YYTextAttributeType YYTextAttributeGetType(NSString *name){
 
 @end
 
+@implementation YYTextListBullet
+
+- (instancetype)init {
+    self = [super init];
+    _color = [UIColor blackColor];
+    return self;
+}
+
++ (YYTextListBullet *)listBulletWithFont:(UIFont *)font color:(UIColor *)color insets:(UIEdgeInsets)insets {
+    YYTextListBullet *bullet = [YYTextListBullet new];
+    bullet.font = font;
+    bullet.color = color;
+    bullet.insets = insets;
+    return bullet;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.font forKey:@"font"];
+    [aCoder encodeObject:self.color forKey:@"color"];
+    [aCoder encodeObject:[NSValue valueWithUIEdgeInsets:self.insets] forKey:@"insets"];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super init];
+    self.font = [aDecoder decodeObjectForKey:@"font"];
+    self.color = [aDecoder decodeObjectForKey:@"color"];
+    self.insets = [(NSValue *)[aDecoder decodeObjectForKey:@"insets"] UIEdgeInsetsValue];
+    return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    typeof(self) one = [self.class new];
+    one.font = self.font;
+    one.color = self.color;
+    one.insets = self.insets;
+    return one;
+}
+
+@end

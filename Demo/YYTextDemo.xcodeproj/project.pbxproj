@@ -78,9 +78,9 @@
 		D94EE9981F37304200F37AD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D94EE9971F37304200F37AD6 /* Assets.xcassets */; };
 		D94EE99B1F37304200F37AD6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D94EE9991F37304200F37AD6 /* LaunchScreen.storyboard */; };
 		D94EE99E1F37304200F37AD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D94EE99D1F37304200F37AD6 /* main.m */; };
+		F0A7EA361FB54D4C008DACD1 /* YYTextListUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = F0A7EA351FB54D4C008DACD1 /* YYTextListUtility.m */; };
 		F0D183BB1FADD590003EB58A /* YYTextListEditExample.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D183BA1FADD590003EB58A /* YYTextListEditExample.m */; };
 		F0D183BE1FADD5A8003EB58A /* YYTextMarkdownExample.m in Sources */ = {isa = PBXBuildFile; fileRef = F0D183BC1FADD5A7003EB58A /* YYTextMarkdownExample.m */; };
-		F0D183C01FADD621003EB58A /* bullet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0D183BF1FADD621003EB58A /* bullet@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -212,11 +212,12 @@
 		D94EE99A1F37304200F37AD6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D94EE99C1F37304200F37AD6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D94EE99D1F37304200F37AD6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F0A7EA341FB54D4C008DACD1 /* YYTextListUtility.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YYTextListUtility.h; sourceTree = "<group>"; };
+		F0A7EA351FB54D4C008DACD1 /* YYTextListUtility.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YYTextListUtility.m; sourceTree = "<group>"; };
 		F0D183B91FADD590003EB58A /* YYTextListEditExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextListEditExample.h; sourceTree = "<group>"; };
 		F0D183BA1FADD590003EB58A /* YYTextListEditExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextListEditExample.m; sourceTree = "<group>"; };
 		F0D183BC1FADD5A7003EB58A /* YYTextMarkdownExample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYTextMarkdownExample.m; sourceTree = "<group>"; };
 		F0D183BD1FADD5A7003EB58A /* YYTextMarkdownExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYTextMarkdownExample.h; sourceTree = "<group>"; };
-		F0D183BF1FADD621003EB58A /* bullet@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bullet@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -334,6 +335,8 @@
 				D91054B91F3735E50007F224 /* YYTextUtilities.m */,
 				D91054BA1F3735E50007F224 /* YYTextWeakProxy.h */,
 				D91054BB1F3735E50007F224 /* YYTextWeakProxy.m */,
+				F0A7EA341FB54D4C008DACD1 /* YYTextListUtility.h */,
+				F0A7EA351FB54D4C008DACD1 /* YYTextListUtility.m */,
 			);
 			path = Utility;
 			sourceTree = "<group>";
@@ -383,7 +386,6 @@
 				D91055281F37368D0007F224 /* dribbble64_imageio.png */,
 				D91055291F37368D0007F224 /* dribbble256_imageio.png */,
 				D910552B1F37368D0007F224 /* pia@2x.png */,
-				F0D183BF1FADD621003EB58A /* bullet@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -516,7 +518,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0D183C01FADD621003EB58A /* bullet@2x.png in Resources */,
 				D94EE99B1F37304200F37AD6 /* LaunchScreen.storyboard in Resources */,
 				D910552F1F37368D0007F224 /* pia@2x.png in Resources */,
 				D910552D1F37368D0007F224 /* dribbble256_imageio.png in Resources */,
@@ -554,6 +555,7 @@
 				D91055221F37367B0007F224 /* YYTextExample.m in Sources */,
 				D91054F81F3736700007F224 /* NSData+YYAdd.m in Sources */,
 				D91054F71F3736700007F224 /* NSBundle+YYAdd.m in Sources */,
+				F0A7EA361FB54D4C008DACD1 /* YYTextListUtility.m in Sources */,
 				D91054C81F3735E50007F224 /* YYTextMagnifier.m in Sources */,
 				D91054DE1F3736060007F224 /* ViewController.m in Sources */,
 				D910551D1F37367B0007F224 /* YYTextAttributeExample.m in Sources */,

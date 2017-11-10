@@ -3,7 +3,7 @@
 //  YYTextDemo
 //
 //  Created by 褚佳义 on 2017/11/4.
-//  Copyright © 2017年 ibireme. All rights reserved.
+//  Copyright © 2017年 CM. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

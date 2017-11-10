@@ -3,7 +3,7 @@
 //  YYTextDemo
 //
 //  Created by 褚佳义 on 2017/11/4.
-//  Copyright © 2017年 ibireme. All rights reserved.
+//  Copyright © 2017年 CM. All rights reserved.
 //
 
 #import "YYTextListEditExample.h"
@@ -24,6 +24,7 @@
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UISwitch *verticalSwitch;
 @property (nonatomic, strong) UISwitch *debugSwitch;
+@property (nonatomic, assign) YYTextListType listType;
 @end
 
 @implementation YYTextListEditExample
@@ -46,18 +47,18 @@
     toolbar.top = kiOS7Later ? 64 : 0;
     [self.view addSubview:toolbar];
 
-    UIImage *image = [UIImage imageNamed:@"bullet@2x.png"];
+    self.listType = 1 + arc4random_uniform(2) % 2;
     NSMutableAttributedString *segment0 = [[NSMutableAttributedString alloc] initWithString:@"It was the best of times, it was the worst of times.\nIt was the age of wisdom, it was the age of foolishness.\nIt was the season of light, it was the season of darkness."];
     segment0.yy_headIndent = 20;
-    [segment0 yy_setAttribute:YYTextBulletAttributeName
-                    value:image
-                    range:segment0.yy_rangeOfAll];
+    [segment0 yy_setAttribute:YYTextListTypeAttributeName
+                        value:@(self.listType)
+                        range:segment0.yy_rangeOfAll];
     NSMutableAttributedString *segment1 = [[NSMutableAttributedString alloc] initWithString:@"\n\n这里是普通文本普通文本普通文本普通文本普通文本普通文本普通文本普通文本普通文本普通文本。\n\n"];
     NSMutableAttributedString *segment2 = [[NSMutableAttributedString alloc] initWithString:@"这是最好的时代，这是最坏的时代。\n这是智慧的时代，这是愚蠢的时代。\n这是信仰的时期，这是怀疑的时期。"];
-    [segment2 yy_setAttribute:YYTextBulletAttributeName
-                        value:image
+    [segment2 yy_setAttribute:YYTextListTypeAttributeName
+                        value:@(self.listType)
                         range:segment2.yy_rangeOfAll];
-    segment2.yy_headIndent = 20;
+    segment2.yy_headIndent = 20;;
 
     NSMutableAttributedString *text = [[NSMutableAttributedString alloc] init];
     [text appendAttributedString:segment0];
@@ -66,6 +67,9 @@
     text.yy_font = [UIFont fontWithName:@"Times New Roman" size:20];
     text.yy_lineSpacing = 4;
     text.yy_firstLineHeadIndent = 20;
+    
+    YYTextListBullet *bullet = [YYTextListBullet listBulletWithFont:text.yy_font color:text.yy_color insets:UIEdgeInsetsMake(0, 0, 0, self.listType == YYTextListTypeOrderedList ? 12.f : 5.f)];
+    [text yy_setAttribute:YYTextListBulletAttributeName value:bullet range:text.yy_rangeOfAll];
 
     YYTextView *textView = [YYTextView new];
     textView.attributedText = text;

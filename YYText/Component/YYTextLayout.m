@@ -14,6 +14,7 @@
 #import "YYTextAttribute.h"
 #import "YYTextArchiver.h"
 #import "NSAttributedString+YYText.h"
+#import "YYTextListUtility.h"
 
 const CGSize YYTextContainerMaxSize = (CGSize){0x100000, 0x100000};
 
@@ -337,7 +338,7 @@ dispatch_semaphore_signal(_lock);
 @property (nonatomic, readwrite) BOOL needDrawInnerShadow;
 @property (nonatomic, readwrite) BOOL needDrawStrikethrough;
 @property (nonatomic, readwrite) BOOL needDrawBorder;
-@property (nonatomic, readwrite) BOOL needDrawBullet;
+@property (nonatomic, readwrite) BOOL needDrawList;
 
 @property (nonatomic, assign) NSUInteger *lineRowsIndex;
 @property (nonatomic, assign) YYRowEdge *lineRowsEdge; ///< top-left origin
@@ -831,7 +832,7 @@ dispatch_semaphore_signal(_lock);
             if (attrs[YYTextInnerShadowAttributeName]) layout.needDrawInnerShadow = YES;
             if (attrs[YYTextStrikethroughAttributeName]) layout.needDrawStrikethrough = YES;
             if (attrs[YYTextBorderAttributeName]) layout.needDrawBorder = YES;
-            if (attrs[YYTextBulletAttributeName]) layout.needDrawBullet = YES;
+            if ([(NSNumber *)attrs[YYTextListTypeAttributeName] unsignedIntegerValue] != YYTextListTypeNone) layout.needDrawList = YES;
         };
         
         [layout.text enumerateAttributesInRange:visibleRange options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired usingBlock:block];
@@ -3138,23 +3139,34 @@ static void YYTextDrawInnerShadow(YYTextLayout *layout, CGContextRef context, CG
     CGContextRestoreGState(context);
 }
 
-static void YYTextDrawBullet(YYTextLayout *layout, CGContextRef context, CGSize size, CGPoint point, BOOL (^cancel)(void)) {
+static void YYTextDrawList(YYTextLayout *layout, CGContextRef context, CGSize size, CGPoint point, BOOL (^cancel)(void)) {
     BOOL isVertical = layout.container.verticalForm;
 
     NSArray *lines = layout.lines;
+    NSUInteger orderedListIndex = 0;
     for (NSUInteger l = 0, lMax = lines.count; l < lMax; l++) {
         YYTextLine *line = lines[l];
         if (layout.truncatedLine && layout.truncatedLine.index == line.index) line = layout.truncatedLine;
+        
         NSDictionary *attributes = [layout.text yy_attributesAtIndex:line.range.location];
-        UIImage *image = (UIImage *)attributes[YYTextBulletAttributeName];
-        if (image) {
+        YYTextListType listType = [(NSNumber *)attributes[YYTextListTypeAttributeName] unsignedIntegerValue];
+        if (listType != YYTextListTypeNone) {
             BOOL newLine = YES;
-            // only draw bullet for new line
+            // only draw list for new line
             if (line.range.location > 0) {
                 NSRange firstCharacterRange = NSMakeRange(line.range.location - 1, 1);
                 newLine = [[layout.text.string substringWithRange:firstCharacterRange] isEqualToString:@"\n"];
             }
             if (newLine) {
+                UIImage *image = nil;
+                YYTextListBullet *bullet = (YYTextListBullet *)[layout.text yy_attribute:YYTextListBulletAttributeName atIndex:line.range.location];
+                if (listType == YYTextListTypeUnorderedList) {
+                    orderedListIndex = 0;
+                    image = [YYTextListUtility imageWithTitle:@"•" font:bullet.font textColor:bullet.color];
+                } else if (listType == YYTextListTypeOrderedList) {
+                    orderedListIndex += 1;
+                    image = [YYTextListUtility imageWithTitle:[NSString stringWithFormat:@"%@", @(orderedListIndex)] font:bullet.font textColor:bullet.color];
+                }
                 CGFloat posX, posY;
                 if (isVertical) {
                     posX = size.width - (layout.container.size.width - line.bounds.origin.x) + (line.bounds.size.width - image.size.height) / 2.f;
@@ -3163,6 +3175,8 @@ static void YYTextDrawBullet(YYTextLayout *layout, CGContextRef context, CGSize 
                     posX = line.bounds.origin.x - layout.container.insets.left;
                     posY = line.bounds.origin.y + (line.bounds.size.height - image.size.height) / 2.f;
                 }
+                posX += bullet.insets.left - bullet.insets.right;
+                posY += bullet.insets.top - bullet.insets.bottom;
                 CGRect rect = CGRectMake(posX, posY, image.size.width, image.size.height);
                 rect = CGRectStandardize(rect);
                 
@@ -3172,6 +3186,8 @@ static void YYTextDrawBullet(YYTextLayout *layout, CGContextRef context, CGSize 
                 CGContextDrawImage(context, rect, image.CGImage);
                 CGContextRestoreGState(context);
             }
+        } else {
+            orderedListIndex = 0;
         }
     }
 }
@@ -3413,9 +3429,9 @@ static void YYTextDrawDebug(YYTextLayout *layout, CGContextRef context, CGSize s
             if (cancel && cancel()) return;
             YYTextDrawBorder(self, context, size, point, YYTextBorderTypeNormal, cancel);
         }
-        if (self.needDrawBullet && context) {
+        if (self.needDrawList && context) {
             if (cancel && cancel()) return;
-            YYTextDrawBullet(self, context, size, point, cancel);
+            YYTextDrawList(self, context, size, point, cancel);
         }
         if (debug.needDrawDebug && context) {
             if (cancel && cancel()) return;

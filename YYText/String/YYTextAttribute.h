@@ -82,7 +82,14 @@ typedef NS_ENUM (NSUInteger, YYTextTruncationType) {
     YYTextTruncationTypeMiddle = 3,
 };
 
-
+/**
+ The list type, tells the YYTextLayout which type of list it should draw.
+ */
+typedef NS_ENUM(NSUInteger, YYTextListType) {
+    YYTextListTypeNone = 0,      // no list
+    YYTextListTypeUnorderedList, // unordered list
+    YYTextListTypeOrderedList    // ordered list
+};
 
 #pragma mark - Attribute Name Defined in YYText
 
@@ -142,9 +149,14 @@ UIKIT_EXTERN NSString *const YYTextHighlightAttributeName;
 /// Use this attribute to add transform to each glyph in a range of text.
 UIKIT_EXTERN NSString *const YYTextGlyphTransformAttributeName;
 
-/// The value of this attribute is a `UIImage` object stores the image for drawing bullet.
-/// Use this attribute to add bullet to each new line.
-UIKIT_EXTERN NSString *const YYTextBulletAttributeName;
+/// The value of this attribute is a `NSNumber`(wrapped `YYTextListType`) object stores the type of list.
+/// Use this attribute to format each new line to list.
+UIKIT_EXTERN NSString *const YYTextListTypeAttributeName;
+
+
+/// The value of this attribute is a YYTextListBullet object stores the type of list.
+/// Use this attribute to specify the style of bullet in list.
+UIKIT_EXTERN NSString *const YYTextListBulletAttributeName;
 
 /// The value of this attribute is a `NSNumber`(wrapped `Bool`) object.
 /// Use this attribute to identify whether there's line break caused by attachment.
@@ -345,6 +357,26 @@ typedef void(^YYTextAction)(UIView *containerView, NSAttributedString *text, NSR
  If the value is nil, YYTextView or YYLabel will ask it's delegate to handle the long press action.
  */
 @property (nullable, nonatomic, copy) YYTextAction longPressAction;
+
+@end
+
+/**
+ YYTextListBullet objects are used by the NSAttributedString class cluster
+ as the values for list-formatted attributes (stored in the attributed string
+ under the key named YYTextListTypeAttributeName).
+ 
+ Use properties in this class to specify the style of bullet in list.
+*/
+@interface YYTextListBullet : NSObject <NSCoding, NSCopying>
+
+/**
+ Convenience methods to create a default list bullet with the specifeid font, color and insets.
+ */
++ (YYTextListBullet *)listBulletWithFont:(UIFont *)font color:(UIColor *)color insets:(UIEdgeInsets)insets;
+
+@property(nullable, nonatomic, strong) UIFont *font;
+@property(nullable, nonatomic, strong) UIColor *color;
+@property(nonatomic, assign) UIEdgeInsets insets;
 
 @end
 
